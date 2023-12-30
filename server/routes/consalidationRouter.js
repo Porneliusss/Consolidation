@@ -9,5 +9,6 @@ router.get('/orderStatus/:id', consalidationController.getStatusByOrderId)
 router.get('/', consalidationController.getAll)
 router.get('/getAddresses', consalidationController.getAddresses)
 router.get('/delete/:id', consalidationController.delete)
+router.get('/wayBills/all', consalidationController.getAllBillsPackCar)
 
 module.exports = router
