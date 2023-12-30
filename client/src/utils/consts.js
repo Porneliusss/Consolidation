@@ -8,3 +8,7 @@ export const PRODUCT_ROUTE = '/productList'
 export const PRODUCT_ITEM_ROUTE = '/product' 
 export const PROFIL_ROUTE = '/profile' 
 export const CONSOLIDATION_ROUTER = '/consolidation'
+export const PACKAGE_CREATE_ROUTER = '/package'
+export const WAYBILL_ROUTER = '/waybill'
+export const WAYBILL_PAGE_ROUTER = '/waybill/page'
+
