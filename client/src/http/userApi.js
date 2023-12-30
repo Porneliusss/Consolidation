@@ -45,3 +45,13 @@ export const getUserData = async (id) => {
     const response = await $authHost.get('api/user/' + id)
     return response
 }
+
+export const createPackage = async (pack) => {
+    const response = await $authHost.post('api/package/create', pack)
+    return response
+}
+
+export const getPackageByUid = async (id) => {
+    const response = await $authHost.get('api/package/user/' + id)
+    return response
+}
