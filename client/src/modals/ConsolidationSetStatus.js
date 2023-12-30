@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FormSelect, Modal } from "react-bootstrap";
 import { Button } from 'react-bootstrap';
-import { changeStatus } from "../http/consolidationApi";
+import { updStatus } from "../http/consolidationApi";
 
 const StatusModel = ({ show = false, hide, id }) => {
     const [status, setStatus] = useState("")
@@ -24,13 +24,13 @@ const StatusModel = ({ show = false, hide, id }) => {
                         <option disabled value="">
                             Выберите статус 
                         </option>
-                        <option value="Сформирована">
-                            Сформирована
+                        <option value="1">
+                            Принят
                         </option>
-                        <option value="Доставляется">
+                        <option value="2">
                             Доаствляется
                         </option>
-                        <option value="Готово">
+                        <option value="3">
                             Готово
                         </option>
                     </FormSelect>
@@ -40,7 +40,7 @@ const StatusModel = ({ show = false, hide, id }) => {
                         Отмена
                     </Button>
                     <Button variant="success" onClick={() => {
-                        changeStatus(id, {status: status}).then(hide)
+                        updStatus(id, {status: status}).then(hide) 
                     }}>
                         Готово
                     </Button>
