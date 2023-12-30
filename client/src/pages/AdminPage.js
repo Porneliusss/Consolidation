@@ -5,7 +5,7 @@ import { getAllAdvice } from "../http/userApi";
 import GamilMail from "../components/DelAdvice";
 import AddProductModel from "../modals/AddProductModel";
 import { useNavigate } from "react-router-dom";
-import { CONSOLIDATION_ROUTER } from "../utils/consts";
+import { CONSOLIDATION_ROUTER, WAYBILL_PAGE_ROUTER } from "../utils/consts";
 import AddProvider from "../modals/AddProvider";
 import AddCategory from "../modals/AddCategory";
 
@@ -84,30 +84,16 @@ const AdminPage = () => {
                     <Row className="mt-2">
                         <Col>
                             <Button
-                                onClick={() => setProductModel(true)}
-                            >
-                                Добавить продукт
-                            </Button>
-                            <Button
                                 className="ms-2"
                                 onClick={() => navigate(CONSOLIDATION_ROUTER)}
                             >
                                 Конслидация поставок
                             </Button>
-                        </Col>
-                    </Row>
-                    <Row className="mt-2">
-                        <Col>
-                            <Button
-                                onClick={() => setProviderModel(true)}
-                            >
-                                Добваить поставщика
-                            </Button>
                             <Button
                                 className="ms-2"
-                                onClick={() => setCategoryModel(true)}
+                                onClick={() => navigate(WAYBILL_PAGE_ROUTER)}
                             >
-                                Добавить категорию
+                                Путевые листы
                             </Button>
                         </Col>
                     </Row>

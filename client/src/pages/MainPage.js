@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import mainImg from "../assets/main1.png"
 import { useNavigate } from "react-router-dom";
-import { LOGIN_ROUTE, PRODUCT_ROUTE } from "../utils/consts";
+import { LOGIN_ROUTE, PACKAGE_CREATE_ROUTER, PRODUCT_ROUTE } from "../utils/consts";
 import AdviceModel from "../modals/AdviceModel";
 
 
@@ -36,14 +36,22 @@ function MainPage() {
                                 navigate(LOGIN_ROUTE)
                         }}
                     > Получить консультацию </Button>
-                    <Button variant="success"
+                    <Button
+                        className="me-2"
+                        onClick={() => {
+                            navigate(PACKAGE_CREATE_ROUTER);
+                        }}
+                    >
+                        Отправить посылку
+                    </Button>
+                    {/* <Button variant="success"
                         onClick={() => {
                             localStorage.getItem('isAuth') ?
                                 navigate(PRODUCT_ROUTE)
                                 :
                                 navigate(LOGIN_ROUTE)
                         }}
-                    > Перейти к списку товаров </Button>
+                    > Перейти к списку товаров </Button> */}
                 </Col>
                 <Col xs={5} className="mt-5">
                     <img style={{ width: "100%", height: "100%" }} className="ms-5" src={mainImg} alt="изображение" />

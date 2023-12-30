@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Image, ListGroup, ListGroupItem, Row, Spinner } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import { getUserData } from "../http/userApi";
+import { getPackageByUid, getUserData } from "../http/userApi";
 import ConsolidationModel from "../modals/ConsolidationModel";
 
 const Profile = () => {
@@ -11,16 +11,22 @@ const Profile = () => {
     const [consolidationModel, setConsolidationModel] = useState(false);
     const [selectId, setSelectId] = useState()
 
+    const [packsData, setPackData] = useState([])
+
     useEffect(() => {
         getUserData(id)
             .then((response) => {
                 setUserData(response.data);
-                setIsLoading(false);
-            })
+            }).then(() => {
+                getPackageByUid(id)
+                    .then((response) => {
+                        setPackData(response.data);
+                    })
+            }).finally(() => setIsLoading(false))
     }, [id]);
 
     return (
-        <div style={{minHeight: "100vh"}}>
+        <div style={{ minHeight: "100vh" }}>
             <Container className="text-white">
                 {isLoading ? (
                     <Spinner animation="border" variant="light" />
@@ -45,8 +51,8 @@ const Profile = () => {
                                 </ListGroup>
                             </Col>
                             <Col md={4}>
-                                <h5>Заказы пользователя</h5>
-                                {userData.orders.map((item) => {
+                                <h5>Посылки пользователя</h5>
+                                {packsData.map((item) => {
                                     return (
                                         <ListGroup key={item.id} as="ol" className="mt-2">
                                             <ListGroup.Item
@@ -54,34 +60,25 @@ const Profile = () => {
                                                 className="d-flex justify-content-between align-items-start"
                                             >
                                                 <div className="ms-2 me-auto">
-                                                    <div>Название: {item.name}</div>
-                                                    <div>Количество: {item.quantity}</div>
-                                                    <div>Общая цена: {item.price}</div>
-                                                    <div>Дата заказа: {item.startDate.split('T')[0]}</div>
-                                                    <div>Место доставки: {item.endPlace}</div>
-                                                    <div>Поставщик: {item.product.provider.name}</div>
-                                                    {item.supply ?
-
-                                                        <Button onClick={() => {
-                                                            setSelectId(item.id)
-                                                            setConsolidationModel(true)
-                                                        }} className="mt-2">
-                                                            Подробнее
-                                                        </Button>
-                                                        :
-                                                        <Button disabled variant="outlined-secondary" className="mt-2">
-                                                            Поставка в обработке
-                                                        </Button>
-                                                    }
+                                                    <div>Откуда: {item.startPlace}</div>
+                                                    <div>Куда: {item.endPlace}</div>
+                                                    <div>Вес: {item.weight}</div>
+                                                    <div>Длинна: {item.length}</div>
+                                                    <div>Ширина: {item.width}</div>
+                                                    <div>
+                                                        Статус:
+                                                        {item.status === 0 ? ' В обработке' :
+                                                            item.status === 1 ? ' Доставляется' :
+                                                                item.status === 2 ? ' Доставлен' : 'none'
+                                                        }
+                                                    </div>
                                                 </div>
-                                                <Image
-                                                    src={process.env.REACT_APP_API_URL + item.product.img} alt="item image"
-                                                    style={{ width: '40%', height: '100%' }}
-                                                />
                                             </ListGroup.Item>
                                         </ListGroup>
+
                                     )
-                                })}
+                                })
+                                }
                             </Col>
                         </Row>
                     </>
