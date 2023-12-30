@@ -1,4 +1,4 @@
-const { Consolidation, Order, OrderConsolidation } = require('../models/models')
+const { Consolidation, Order, OrderConsolidation, Waybill, PackageCar, Car, Package } = require('../models/models')
 const ApiError = require('../error/ApiError');
 const { Sequelize } = require('../db');
 
@@ -93,6 +93,24 @@ class ConsolidationController {
 
         return res.json(consolidation);
     }
+
+    async getAllBillsPackCar(req, res) {
+        const wayBill = await Waybill.findAll({
+            include: [{model: PackageCar}]
+        })
+
+
+        const cars = await Car.findAll({
+            where: { id: wayBill.map((item) => item.packageCar.carId) },
+        });
+
+        const packs = await Package.findAll({
+            where: { id: wayBill.map((item) => item.packageCar.packageId) },
+        });
+
+        return res.json({wayBill, cars, packs})
+    }
+
 }
 
 
